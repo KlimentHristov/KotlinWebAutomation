@@ -17,7 +17,9 @@ class LoginPage(private val driver: WebDriver) {
     @FindBy(xpath = "//*[@id=\"loginusername\"]") private lateinit var emailInput: WebElement
     @FindBy(id = "loginpassword") private lateinit var passwordInput: WebElement
     @FindBy(xpath = "//*[@id=\"loginsubmit\"]") private lateinit var submitButton: WebElement
-    @FindBy(xpath = "//*[@id=\"autocomplete_popup_nf\"]/div[4]") lateinit var popUpMessageAcceptBtn: WebElement
+
+    @FindBy(xpath = "//*[@id=\"okmsg\"]")  lateinit var successLogoutMessage: WebElement
+    @FindBy(className = "selenium-forgotten-page")  lateinit var forgotPasswordBtn: WebElement
 
     private fun enterEmail(){
         emailInput.isDisplayed
