@@ -5,13 +5,13 @@ import org.openqa.selenium.WebElement
 import org.openqa.selenium.support.FindBy
 import org.openqa.selenium.support.PageFactory
 
-class ResultPage(private val driver: WebDriver) {
+class ResultPage(driver: WebDriver): BasePage(driver){
 
     init {
         PageFactory.initElements(driver, this)
     }
 
-    @FindBy(xpath = "//*[@id=\"okmsg\"]") lateinit var messageForSuccessCreatedClient: WebElement
+    @FindBy(xpath = "//*[@id=\"okmsg\"]") lateinit var messageSuccessOperation: WebElement
     @FindBy(xpath = "//*[@id=\"error\"]") lateinit var messageError: WebElement
 
 

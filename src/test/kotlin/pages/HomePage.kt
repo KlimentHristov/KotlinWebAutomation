@@ -9,17 +9,22 @@ import org.openqa.selenium.support.PageFactory
 import org.openqa.selenium.support.ui.ExpectedConditions
 import org.openqa.selenium.support.ui.WebDriverWait
 import java.time.Duration
-class HomePage(private val driver: WebDriver) {
+class HomePage(driver: WebDriver):BasePage(driver) {
 
     lateinit var cp: ClientPage
     init {
         cp = ClientPage(driver)
         PageFactory.initElements(driver, this)
     }
+    var randomName = generateString(10)
+    val savedRandomName = randomName
+
+    // Titles
+    @FindBy(xpath = "//*[@id=\"logo\"]/a/h1")  lateinit var logoTextForLoggedUser: WebElement
 
     // Pop up message
     @FindBy(xpath = "//*[@id=\"autocomplete_popup_nf\"]/div[4]") lateinit var popUpMessageAcceptBtn: WebElement
-
+    @FindBy(className = "userpanel-header") lateinit var loggedEmail: WebElement
 
 
     // Home page --> menus
@@ -38,14 +43,15 @@ class HomePage(private val driver: WebDriver) {
     @FindBy(id = "cl_delbtn") lateinit var deleteBtn: WebElement
     @FindBy(id = "cl_invbtn") lateinit var generateInvoice: WebElement
     @FindBy(id = "cl_expbtn") lateinit var exportBtn: WebElement
-    val subClientMenu = driver.findElements(By.id("sublinks2"))
-    val tableClientMenu = driver.findElements(By.id("tablecontrolz"))
+//    val subClientMenu = driver.findElements(By.id("sublinks2"))
+//    val tableClientMenu = driver.findElements(By.id("tablecontrolz"))
 
     fun handleDeletePopup(action: String){
         val mainWindowHandle = driver.windowHandle
         for (windowHandle in driver.windowHandles) {
             if (windowHandle != mainWindowHandle) {
                 driver.switchTo().window(windowHandle)
+                break
             }
         }
         // Perform actions in the popup window
@@ -81,10 +87,6 @@ class HomePage(private val driver: WebDriver) {
             .map { allowedChars.random() }  // Randomly select characters from allowedChars
             .joinToString("")  // Convert the list of characters to a string
     }
-
-    var randomName = generateString(10)
-    val savedRandomName = randomName
-
     fun createNewClient(){
         val wait = WebDriverWait(driver, Duration.ofSeconds(10))
 
@@ -99,7 +101,7 @@ class HomePage(private val driver: WebDriver) {
         cp.addressField.sendKeys(newClientAddress)
         cp.cityField.sendKeys(newClientCity)
 
-        var actions = Actions(driver)
+        val actions = Actions(driver)
         actions.moveToElement(cp.addClientBtn).build().perform()
 
         cp.addClientBtn.click()

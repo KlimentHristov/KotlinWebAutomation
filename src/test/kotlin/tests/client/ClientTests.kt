@@ -1,13 +1,16 @@
-package tests.login
+package tests.client
+
 import org.testng.Assert
 import org.testng.annotations.Test
+import constants.Constants.HOME_PAGE_TITLE
+import constants.Constants.HOME_PAGE_URL
+import constants.Constants.MAIN_URL
 import pages.HomePage
 import pages.LoginPage
 import pages.ResultPage
 import tests.BaseTest
 
-class AuthenticateTest: BaseTest() {
-
+class ClientTests: BaseTest() {
     lateinit var lp: LoginPage
     lateinit var hp: HomePage
     lateinit var rp: ResultPage
@@ -15,31 +18,20 @@ class AuthenticateTest: BaseTest() {
         lp = LoginPage(driver)
         hp = HomePage(driver)
         rp = ResultPage(driver)
-        loginWithEmailAndPassword()
     }
-
-    private fun loginWithEmailAndPassword(){
-        driver.get("http://kikotesting.inv.bg/login")
-        lp.loginWithValidCredentials()
-        hp.popUpMessageAcceptBtn.click()
-    }
-
     @Test(priority = 1)
     fun createClient(){
+        driver.get(MAIN_URL)
+        lp.loginWithValidCredentials()
 
-        val currentTitle = "Система за фактуриране - Kikotesting"
-        val currentURL = "https://kikotesting.inv.bg/home"
-
-        Assert.assertTrue(driver.title.contains(currentTitle))
-        Assert.assertTrue(driver.currentUrl.contains(currentURL))
+        Assert.assertTrue(driver.currentUrl.contains(HOME_PAGE_URL))
+        Assert.assertTrue(driver.title.contains(HOME_PAGE_TITLE))
 
         hp.menuClients.click()
         hp.createNewClient()
         Assert.assertEquals("Клиентът е добавен успешно.\n" +
-                " ",rp.messageForSuccessCreatedClient.text)
-
+                " ",rp.messageSuccessOperation.text)
     }
-
 
     @Test(priority = 2)
     fun deleteCreatedClient(){
@@ -48,15 +40,7 @@ class AuthenticateTest: BaseTest() {
         hp.deleteBtn.click()
         // driver.switchTo().activeElement().click()
         hp.handleDeletePopup("Accept")
-
-        Assert.assertTrue(rp.messageError.text.contains("Избраните клиенти бяха изтрити успешно."))
+        Assert.assertTrue(rp.messageSuccessOperation.text.contains("Избраните клиенти бяха изтрити успешно."))
+        tearDown()
     }
-
-
-
-
-
-
-
-
 }

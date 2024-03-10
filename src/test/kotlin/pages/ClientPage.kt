@@ -5,7 +5,7 @@ import org.openqa.selenium.WebElement
 import org.openqa.selenium.support.FindBy
 import org.openqa.selenium.support.PageFactory
 
-class ClientPage(private val driver: WebDriver) {
+class ClientPage(driver: WebDriver):BasePage(driver) {
 
     init {
         PageFactory.initElements(driver, this)

@@ -1,17 +1,18 @@
 package pages
 
+import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.support.FindBy
 import org.openqa.selenium.support.PageFactory
 
-class LoginPage(private val driver: WebDriver) {
+class LoginPage(driver: WebDriver): BasePage(driver) {
 
     init {
         PageFactory.initElements(driver, this)
     }
 
-    private val myEmail: String = "kliment.hristov@gmail.com"
+    val myEmail: String = "kliment.hristov@gmail.com"
     private val myPass: String = "Kiko123@"
 
     @FindBy(xpath = "//*[@id=\"loginusername\"]") private lateinit var emailInput: WebElement
@@ -21,12 +22,14 @@ class LoginPage(private val driver: WebDriver) {
     @FindBy(xpath = "//*[@id=\"okmsg\"]")  lateinit var successLogoutMessage: WebElement
     @FindBy(className = "selenium-forgotten-page")  lateinit var forgotPasswordBtn: WebElement
 
+
+
     private fun enterEmail(){
-        emailInput.isDisplayed
+        waitToBeVisible(emailInput)
         emailInput.sendKeys(myEmail)
     }
     private fun enterPassword(){
-        passwordInput.isDisplayed
+        waitToBeVisible(passwordInput)
         passwordInput.sendKeys(myPass)
     }
     private fun clickSubmitBtn(){
