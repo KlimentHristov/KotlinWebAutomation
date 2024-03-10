@@ -40,22 +40,23 @@ open class BasePage(val driver: WebDriver) {
     }
 
     // Select element by
-    fun selectElement(element: WebElement, option: String): Select{
+    fun selectElementByValue(element: WebElement?, option: String?){
         val select = Select(element)
-        when(option){
-            "visibleText" -> select.selectByVisibleText(option)
-            "index" -> select.selectByIndex(option.toInt())
-            "value" -> select.selectByValue(option)
-        }
-        return select
+        return select.selectByValue(option)
+    }
+    fun selectElementByIndex(element: WebElement, index: Int){
+        val select = Select(element)
+        return select.selectByIndex(index)
+    }
+    fun selectElementByText(element: WebElement, text: String){
+        val select = Select(element)
+        return select.selectByVisibleText(text)
     }
 
-    // Hover element by
-    fun hoverElement(element: WebElement?, option: String) {
+    // Scroll to element
+    fun scrollToElement(element: WebElement?) {
         val action = Actions(driver)
-        when(option){
-            "hover"->action.moveToElement(element).build().perform()
-        }
+        return action.scrollToElement(element).build().perform()
     }
 
 
