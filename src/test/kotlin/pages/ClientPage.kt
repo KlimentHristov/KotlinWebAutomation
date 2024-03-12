@@ -24,7 +24,8 @@ class ClientPage(driver: WebDriver):BasePage(driver) {
     @FindBy(name = "phone_numbers[0][number]") lateinit var phoneNumberField: WebElement
     @FindBy(xpath = "//*[@id=\"client-add-form\"]/table/tbody[4]/tr[2]/td[2]/a") lateinit var removePhoneBtn: WebElement
     // Selector
-    @FindBy(xpath = "//*[@id=\"client-add-form\"]/table/tbody[4]/tr[2]/td[2]/select") lateinit var selectCollectionMobileType: WebElement
+    @FindBy(name = "phone_numbers[0][type]") lateinit var phoneSelector: WebElement
+
 
     // Buttons
     @FindBy(name = "do_submit") lateinit var addClientBtn: WebElement

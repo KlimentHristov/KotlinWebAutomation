@@ -5,10 +5,13 @@ import org.testng.annotations.Test
 import constants.Constants.HOME_PAGE_TITLE
 import constants.Constants.HOME_PAGE_URL
 import constants.Constants.MAIN_URL
+import org.openqa.selenium.By
+import pages.ClientPage
 import pages.HomePage
 import pages.LoginPage
 import pages.ResultPage
 import tests.BaseTest
+import updater.Updater
 
 class ClientTests: BaseTest() {
     lateinit var lp: LoginPage
@@ -18,6 +21,7 @@ class ClientTests: BaseTest() {
         lp = LoginPage(driver)
         hp = HomePage(driver)
         rp = ResultPage(driver)
+
     }
     @Test(priority = 1)
     fun createClient(){
@@ -28,19 +32,36 @@ class ClientTests: BaseTest() {
         Assert.assertTrue(driver.title.contains(HOME_PAGE_TITLE))
 
         hp.menuClients.click()
-        hp.createNewClient()
+        hp.createDefaultClient()
         Assert.assertEquals("Клиентът е добавен успешно.\n" +
                 " ",rp.messageSuccessOperation.text)
     }
-
     @Test(priority = 2)
     fun deleteCreatedClient(){
         hp.menuClients.click()
-        hp.checkboxClientByText(hp.savedRandomName)
+        Updater.getUpdatedCheckboxList(driver)?.get(0)?.click()
         hp.deleteBtn.click()
-        // driver.switchTo().activeElement().click()
+
         hp.handleDeletePopup("Accept")
-        Assert.assertTrue(rp.messageSuccessOperation.text.contains("Избраните клиенти бяха изтрити успешно."))
-        tearDown()
+        Assert.assertTrue(rp.messageSuccessOperation.text.
+            contains("Избраните клиенти бяха изтрити успешно."))
+        Assert.assertTrue(driver.findElement(By.xpath("//*[@id=\"emptylist\"]")).text.contains("Все още нямате добавени клиенти."))
+
+        Assert.assertEquals(Updater.getUpdatedCheckboxList(driver)?.size,0)
     }
+    @Test(priority = 3)
+    fun createClientExtendable(){
+        hp.createExtendableClient()
+        Assert.assertEquals("Клиентът е добавен успешно.\n" +
+                " ",rp.messageSuccessOperation.text)
+    }
+    @Test(priority = 4)
+    fun verifyExtendableClientIsCreated(){
+        hp.menuClients.click()
+        Assert.assertEquals(hp.driver.findElements(By.className("faktura_id")).size,1)
+    }
+
+
+
+
 }
