@@ -12,6 +12,7 @@ import pages.LoginPage
 import pages.ResultPage
 import tests.BaseTest
 import updater.Updater
+import kotlin.math.log
 
 class ClientTests: BaseTest() {
     lateinit var lp: LoginPage
@@ -23,21 +24,38 @@ class ClientTests: BaseTest() {
         rp = ResultPage(driver)
 
     }
-    @Test(priority = 1)
-    fun createClient(){
+    private fun login(){
         driver.get(MAIN_URL)
         lp.loginWithValidCredentials()
-
+        hp.popUpMessageAcceptBtn.click()
         Assert.assertTrue(driver.currentUrl.contains(HOME_PAGE_URL))
         Assert.assertTrue(driver.title.contains(HOME_PAGE_TITLE))
-
+    }
+    @Test(priority = 1)
+    fun createClientFromMenuClients(){
+        login()
         hp.menuClients.click()
+        hp.newClientBtn.click()
         hp.createDefaultClient()
         Assert.assertEquals("Клиентът е добавен успешно.\n" +
                 " ",rp.messageSuccessOperation.text)
     }
     @Test(priority = 2)
-    fun deleteCreatedClient(){
+    fun createClientFromFastBtnOnHomePage(){
+        hp.menuHome.click()
+        val kiko = Updater.getFasterStartMenu(driver)
+        for (element in kiko!!){
+            if (element.text.contains("Добавяне на нов клиент")) {
+                element.click()
+                break  // Exit loop once the element is clicked
+            }
+        }
+        hp.createDefaultClient()
+        Assert.assertEquals("Клиентът е добавен успешно.\n" +
+                " ",rp.messageSuccessOperation.text)
+    }
+    @Test(priority = 3)
+    fun deleteOneClient(){
         hp.menuClients.click()
         Updater.getUpdatedCheckboxList(driver)?.get(0)?.click()
         hp.deleteBtn.click()
@@ -45,20 +63,34 @@ class ClientTests: BaseTest() {
         hp.handleDeletePopup("Accept")
         Assert.assertTrue(rp.messageSuccessOperation.text.
             contains("Избраните клиенти бяха изтрити успешно."))
-        Assert.assertTrue(driver.findElement(By.xpath("//*[@id=\"emptylist\"]")).text.contains("Все още нямате добавени клиенти."))
-
-        Assert.assertEquals(Updater.getUpdatedCheckboxList(driver)?.size,0)
     }
-    @Test(priority = 3)
+    @Test(priority = 4)
+    fun checkClientsListAfterDeleteOne(){
+        Assert.assertEquals(Updater.getUpdatedCheckboxList(driver)?.size,1)
+    }
+    @Test(priority = 5)
     fun createClientExtendable(){
+        hp.newClientBtn.click()
         hp.createExtendableClient()
         Assert.assertEquals("Клиентът е добавен успешно.\n" +
                 " ",rp.messageSuccessOperation.text)
     }
-    @Test(priority = 4)
-    fun verifyExtendableClientIsCreated(){
+    @Test(priority = 6)
+    fun verifyClientListIncreased(){
         hp.menuClients.click()
-        Assert.assertEquals(hp.driver.findElements(By.className("faktura_id")).size,1)
+        Assert.assertEquals(hp.driver.findElements(By.className("faktura_id")).size,2)
+    }
+    @Test(priority = 7)
+    fun deleteAllClients(){
+        hp.handleAllBtn.isDisplayed.and(hp.handleAllBtn.isEnabled)
+        hp.handleAllBtn.click()
+        hp.deleteBtn.click()
+
+        hp.handleDeletePopup("Accept")
+        Assert.assertTrue(rp.messageSuccessOperation.text.
+        contains("Избраните клиенти бяха изтрити успешно."))
+        hp.menuClients.click()
+        Assert.assertTrue(driver.findElement(By.xpath("//*[@id=\"emptylist\"]")).text.contains("Все още нямате добавени клиенти."))
     }
 
 

@@ -6,6 +6,7 @@ import constants.Constants.MAIN_USER
 import pages.HomePage
 import pages.LoginPage
 import tests.BaseTest
+import updater.Updater
 
 class LoginTests: BaseTest() {
 
@@ -21,6 +22,7 @@ class LoginTests: BaseTest() {
         driver.get(MAIN_URL)
         lp.loginWithValidCredentials()
         hp.popUpMessageAcceptBtn.click()
+
         Assert.assertEquals(hp.loggedEmail.text,lp.myEmail)
         Assert.assertEquals(hp.logoTextForLoggedUser.text, MAIN_USER)
         tearDown()
