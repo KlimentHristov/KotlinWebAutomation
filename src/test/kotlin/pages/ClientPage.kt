@@ -23,6 +23,7 @@ class ClientPage(driver: WebDriver):BasePage(driver) {
     @FindBy(name = "person_city") lateinit var cityField: WebElement
     @FindBy(name = "phone_numbers[0][number]") lateinit var phoneNumberField: WebElement
     @FindBy(xpath = "//*[@id=\"client-add-form\"]/table/tbody[4]/tr[2]/td[2]/a") lateinit var removePhoneBtn: WebElement
+
     // Selector
     @FindBy(name = "phone_numbers[0][type]") lateinit var phoneSelector: WebElement
 
@@ -31,6 +32,10 @@ class ClientPage(driver: WebDriver):BasePage(driver) {
     @FindBy(name = "do_submit") lateinit var addClientBtn: WebElement
     @FindBy(name = "do_submit_and_warr_create") lateinit var addClientAndWarrantyBtn: WebElement
     @FindBy(name = "do_submit_and_inv_create") lateinit var addClientAndGenerateInvoiceBtn: WebElement
+
+    // Search Client
+    @FindBy(name = "do_submit") lateinit var nameForSearchField: WebElement
+    @FindBy(xpath = "//*[@id=\"searchbox\"]/table/tbody/tr[5]/td[2]/input") lateinit var searchClientBtn: WebElement
 
 
 

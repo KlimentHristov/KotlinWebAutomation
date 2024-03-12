@@ -1,5 +1,5 @@
 package pages
-import constants.FakerInfo
+import updater.FakerInfo
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
@@ -25,11 +25,10 @@ class HomePage(driver: WebDriver):BasePage(driver) {
     // Pop up message
     @FindBy(xpath = "//*[@id=\"autocomplete_popup_nf\"]/div[4]") lateinit var popUpMessageAcceptBtn: WebElement
     @FindBy(className = "userpanel-header") lateinit var loggedEmail: WebElement
-
+    @FindBy(id = "userpanel") lateinit var panelMenu: WebElement
 
 
     // Home page --> menus
-
     @FindBy(id = "tabs_home") lateinit var menuHome: WebElement
     @FindBy(id = "tabs_invoices/new") lateinit var menuNewInvoice: WebElement
     @FindBy(id = "tabs_invoices") lateinit var menuInvoices: WebElement
@@ -67,6 +66,22 @@ class HomePage(driver: WebDriver):BasePage(driver) {
         }else{
             driver.findElement(By.id("cancel-clients-delete")).click()
         }
+    }
+    fun createClientCustomName(name: String){
+        val wait = WebDriverWait(driver, Duration.ofSeconds(10))
+        val newClientAddress = "zhk. Lozenets"
+        val newClientCity = "Sofia city"
+        wait.until(ExpectedConditions.visibilityOf(cp.radioBtnPerson))
+        cp.radioBtnPerson.click()
+        wait.until(ExpectedConditions.visibilityOf(cp.nameField))
+        cp.nameField.sendKeys(name)
+        cp.addressField.sendKeys(newClientAddress)
+        cp.cityField.sendKeys(newClientCity)
+
+        val actions = Actions(driver)
+        actions.moveToElement(cp.addClientBtn).build().perform()
+
+        cp.addClientBtn.click()
     }
     fun createDefaultClient(){
         val wait = WebDriverWait(driver, Duration.ofSeconds(10))

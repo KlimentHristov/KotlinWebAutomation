@@ -1,6 +1,7 @@
 package pages
 
 import kotlinx.coroutines.delay
+import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.interactions.Actions
@@ -37,6 +38,19 @@ open class BasePage(val driver: WebDriver) {
         element ?: throw IllegalArgumentException("Element cannot be null")
         val wait = WebDriverWait(driver, Duration.ofSeconds(waitSeconds))
         wait.until(ExpectedConditions.elementToBeClickable(element))
+    }
+    fun waitForVisibilityOfText(textToBeDisplayed: String, timeOutInSecond: Long) {
+        val wait = WebDriverWait(driver, Duration.ofSeconds(timeOutInSecond))
+        wait.until(ExpectedConditions.refreshed(ExpectedConditions.visibilityOfElementLocated
+            (By.xpath("//*[@text='$textToBeDisplayed'])"))))
+    }
+    // Click
+    fun clickElementContainsText(textToClick: String, timeOutInSecond: Long) {
+        val wait = WebDriverWait(driver, Duration.ofSeconds(timeOutInSecond))
+        wait.until(ExpectedConditions.refreshed(
+            ExpectedConditions.visibilityOfElementLocated(
+                By.xpath("//*[contains(text(), '$textToClick')]"))))
+        driver.findElement(By.xpath("//*[contains(text(), '$textToClick')]")).click()
     }
 
     // Select element by

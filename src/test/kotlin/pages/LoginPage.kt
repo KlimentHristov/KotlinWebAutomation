@@ -19,7 +19,6 @@ class LoginPage(driver: WebDriver): BasePage(driver) {
     @FindBy(id = "loginpassword") private lateinit var passwordInput: WebElement
     @FindBy(xpath = "//*[@id=\"loginsubmit\"]") private lateinit var submitButton: WebElement
 
-    @FindBy(xpath = "//*[@id=\"okmsg\"]")  lateinit var successLogoutMessage: WebElement
     @FindBy(className = "selenium-forgotten-page")  lateinit var forgotPasswordBtn: WebElement
 
 

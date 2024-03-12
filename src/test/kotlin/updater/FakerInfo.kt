@@ -1,4 +1,4 @@
-package constants
+package updater
 
 import com.github.javafaker.Faker
 

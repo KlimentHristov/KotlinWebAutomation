@@ -6,6 +6,7 @@ object Constants {
 
     const val HOME_PAGE_URL = "https://kikotesting.inv.bg/home"
     const val HOME_PAGE_TITLE = "Система за фактуриране - Kikotesting"
+    const val LOGOUT_MESSAGE = "Вие излязохте от акаунта си."
 
 
 
