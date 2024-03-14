@@ -12,7 +12,7 @@ class LoginPage(driver: WebDriver): BasePage(driver) {
         PageFactory.initElements(driver, this)
     }
 
-    val myEmail: String = "kliment.hristov@gmail.com"
+    val myEmail: String = "kikotestsecure@gmail.com"
     private val myPass: String = "Kiko123@"
 
     @FindBy(xpath = "//*[@id=\"loginusername\"]") private lateinit var emailInput: WebElement
