@@ -51,6 +51,9 @@ class HomePage(driver: WebDriver):BasePage(driver) {
     @FindBy(xpath = "//*[@id=\"searchbtn\"]") lateinit var searchBtn: WebElement
 
 
+    // Item section
+    @FindBy(css = "[class=\"newbtn selenium-add-item\"]") lateinit var newItemBtn: WebElement
+
 
     fun handleDeletePopup(action: String){
         val mainWindowHandle = driver.windowHandle
@@ -120,6 +123,8 @@ class HomePage(driver: WebDriver):BasePage(driver) {
         cp.addClientBtn.click()
 
     }
+
+
 
 
 
