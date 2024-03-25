@@ -9,6 +9,14 @@ object FakerInfo {
         fake = Faker()
     }
 
+
+    fun randomName():String{
+        return fake.name().name()
+    }
+    fun randomPrice():String{
+        return fake.number().digits(2)
+    }
+
     fun randomFullName(): String{
         return fake.name().fullName()
     }

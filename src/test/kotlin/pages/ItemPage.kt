@@ -4,6 +4,10 @@ import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.support.FindBy
 import org.openqa.selenium.support.PageFactory
+import org.openqa.selenium.support.ui.ExpectedConditions
+import org.openqa.selenium.support.ui.WebDriverWait
+import updater.FakerInfo
+import java.time.Duration
 
 class ItemPage(driver: WebDriver):BasePage(driver) {
 
@@ -30,8 +34,6 @@ class ItemPage(driver: WebDriver):BasePage(driver) {
 
         @FindBy(xpath = "//input[@value='Добави артикулa' and @type='submit']") lateinit var addItemBtn: WebElement
 
-    fun createItem(){
 
-    }
 
 }

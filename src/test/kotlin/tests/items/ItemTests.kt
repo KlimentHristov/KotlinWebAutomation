@@ -1,10 +1,13 @@
 package tests.items
 
 import constants.Constants
+import org.openqa.selenium.support.ui.ExpectedConditions
+import org.openqa.selenium.support.ui.WebDriverWait
 import org.testng.Assert
 import org.testng.annotations.Test
 import pages.*
 import tests.BaseTest
+import java.time.Duration
 
 class ItemTests: BaseTest() {
 
@@ -33,7 +36,9 @@ class ItemTests: BaseTest() {
         login()
         hp.menuItems.click()
         hp.newItemBtn.click()
-        it.createItem()
+        hp.createItem()
+        rp.waitToBeVisible(rp.messageSuccessOperation)
+        Assert.assertTrue(rp.messageSuccessOperation.text.contains("Артикулът е добавен успешно."))
     }
 
 
