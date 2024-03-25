@@ -100,11 +100,6 @@ class ClientTests: BaseTest() {
         hp.menuClients.click()
         Assert.assertTrue(driver.findElement(By.xpath("//*[@id=\"emptylist\"]")).text.contains("Все още нямате добавени клиенти."))
     }
-    @Test(priority = 8)
-    fun searchClientByName(){
-
-
-    }
 
 
 

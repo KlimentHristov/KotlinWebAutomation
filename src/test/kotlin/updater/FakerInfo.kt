@@ -8,6 +8,12 @@ object FakerInfo {
     init {
         fake = Faker()
     }
+    fun randomPrice(): String{
+        return  fake.number().digits(2)
+    }
+    fun randomName(): String{
+        return fake.name().name()
+    }
 
     fun randomFullName(): String{
         return fake.name().fullName()

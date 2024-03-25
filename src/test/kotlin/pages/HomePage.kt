@@ -1,4 +1,5 @@
 package pages
+import com.github.javafaker.Faker
 import updater.FakerInfo
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
@@ -9,12 +10,15 @@ import org.openqa.selenium.support.PageFactory
 import org.openqa.selenium.support.ui.ExpectedConditions
 import org.openqa.selenium.support.ui.WebDriverWait
 import java.time.Duration
+import kotlin.random.Random
 
 class HomePage(driver: WebDriver):BasePage(driver) {
 
     lateinit var cp: ClientPage
+    lateinit var it: ItemPage
     init {
         cp = ClientPage(driver)
+        it = ItemPage(driver)
         PageFactory.initElements(driver, this)
 
     }
@@ -38,6 +42,10 @@ class HomePage(driver: WebDriver):BasePage(driver) {
     @FindBy(id = "tabs_cashbox")lateinit var menuCashbox: WebElement
     @FindBy(id = "tabs_reports")lateinit var menuReports: WebElement
     @FindBy(id = "tabs_exports")lateinit var menuExports: WebElement
+
+
+    // Home page --> Item section
+    @FindBy(className = "[class=\"newbtn selenium-add-item\"]") lateinit var newItemBtn: WebElement
 
 
     // Home page --> Client section
@@ -118,6 +126,20 @@ class HomePage(driver: WebDriver):BasePage(driver) {
         cp.selectElementByValue(cp.phoneSelector,"mobile")
 
         cp.addClientBtn.click()
+
+    }
+    fun createItem(){
+        val wait = WebDriverWait(driver, Duration.ofSeconds(10))
+        wait.until(ExpectedConditions.visibilityOf(it.titleForNewItem))
+        it.nameOfItem.sendKeys(FakerInfo.randomName())
+        it.priceOfItem.sendKeys(FakerInfo.randomPrice())
+        it.selectElementByValue(it.dropDownPriceCurrency,"EUR")
+        it.quantityOfItem.clear()
+        it.quantityOfItem.sendKeys(Random.nextInt(1,2).toString())
+        it.selectElementByValue(it.dropDownVatRateTax,"0")
+        it.accountOfItem.sendKeys(FakerInfo.randomIBAN())
+        it.batchOfItem.sendKeys("1")
+        it.addItemBtn.click()
 
     }
 
