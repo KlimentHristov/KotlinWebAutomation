@@ -58,9 +58,10 @@ class HomePage(driver: WebDriver):BasePage(driver) {
 
     // Item section
     @FindBy(css = "[class=\"newbtn selenium-add-item\"]") lateinit var newItemBtn: WebElement
+    @FindBy(id = "delbtn") lateinit var delItemBtn: WebElement
 
 
-    fun handleDeletePopup(action: String){
+    fun handlePopupDeleteClients(action: String){
         val mainWindowHandle = driver.windowHandle
         for (windowHandle in driver.windowHandles) {
             if (windowHandle != mainWindowHandle) {
@@ -69,10 +70,27 @@ class HomePage(driver: WebDriver):BasePage(driver) {
             }
         }
         // Perform actions in the popup window
-        if (action == "Accept"){
+        if (action == "Accept" ){
             driver.findElement(By.id("submit-clients-delete")).click()
         }else{
             driver.findElement(By.id("cancel-clients-delete")).click()
+        }
+    }
+    fun handlePopupDeleteItems(action: String){
+        val mainWindowHandle = driver.windowHandle
+        for (windowHandle in driver.windowHandles) {
+            if (windowHandle != mainWindowHandle) {
+                driver.switchTo().window(windowHandle)
+                break
+            }
+        }
+        // Perform actions in the popup window
+        if (action == "Да" ){
+            val acceptAction = driver.findElement(By.cssSelector("[class=\"modal-confirm__ok-button selenium-modal-ok-btn\""))
+            acceptAction.click()
+        }else{
+            val cancelAction = driver.findElement(By.cssSelector("[class=\"modal-confirm__cancel-button\""))
+            cancelAction.click()
         }
     }
     fun createClientCustomName(name: String){

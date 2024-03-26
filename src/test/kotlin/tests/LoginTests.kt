@@ -4,7 +4,9 @@ import org.testng.Assert
 import org.testng.annotations.Test
 import constants.Constants.MAIN_URL
 import constants.Constants.MAIN_USER
+import org.testng.ITestListener
 import org.testng.annotations.AfterClass
+import org.testng.annotations.Listeners
 import pages.HomePage
 import pages.LoginPage
 import pages.ResultPage
@@ -31,7 +33,7 @@ class LoginTests: BaseTest() {
         Assert.assertEquals(hp.loggedEmail.text,lp.myEmail)
         Assert.assertEquals(hp.logoTextForLoggedUser.text, MAIN_USER)
     }
-    @Test(priority = 2)
+    @Test(priority = 3)
     fun logoutFromWebsite(){
         hp.loggedEmail.isDisplayed
         hp.panelMenu.click()

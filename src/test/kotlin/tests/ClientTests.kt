@@ -67,7 +67,7 @@ class ClientTests: BaseTest() {
         Updater.getUpdatedCheckboxList(driver)?.get(0)?.click()
         hp.deleteBtn.click()
 
-        hp.handleDeletePopup("Accept")
+        hp.handlePopupDeleteClients("Accept")
         Assert.assertTrue(rp.messageSuccessOperation.text.
             contains("Избраните клиенти бяха изтрити успешно."))
     }
@@ -93,7 +93,7 @@ class ClientTests: BaseTest() {
         hp.handleAllBtn.click()
         hp.deleteBtn.click()
 
-        hp.handleDeletePopup("Accept")
+        hp.handlePopupDeleteClients("Accept")
         Assert.assertTrue(rp.messageSuccessOperation.text.
         contains("Избраните клиенти бяха изтрити успешно."))
         hp.menuClients.click()

@@ -3,12 +3,15 @@ package tests
 import constants.Constants
 import org.openqa.selenium.By
 import org.testng.Assert
+import org.testng.ITestListener
+import org.testng.ITestResult
 import org.testng.annotations.AfterClass
 import org.testng.annotations.Test
 import pages.*
 import updater.Updater
 
-class ItemTests: BaseTest() {
+
+class ItemTests: BaseTest(), ITestListener {
 
     lateinit var lp: LoginPage
     lateinit var hp: HomePage
@@ -21,7 +24,6 @@ class ItemTests: BaseTest() {
         rp = ResultPage(driver)
         it = ItemPage(driver)
     }
-
     private fun login(){
         driver.get(Constants.MAIN_URL)
         lp.loginWithValidCredentials()
@@ -29,6 +31,12 @@ class ItemTests: BaseTest() {
         Assert.assertTrue(driver.currentUrl.contains(Constants.HOME_PAGE_URL))
         Assert.assertTrue(driver.title.contains(Constants.HOME_PAGE_TITLE))
     }
+        override fun onTestStart(result: ITestResult?) {
+            println(message = "Test ${result?.name} started...")
+        }
+        override fun onTestFailure(result: ITestResult?) {
+            println(message = "Test ${result?.name} failed: ${result?.throwable?.message}")
+        }
     @AfterClass
     fun quitDriver(){
         tearDown()
@@ -66,9 +74,10 @@ class ItemTests: BaseTest() {
     fun deleteAllItems(){
         hp.handleAllBtn.isDisplayed.and(hp.handleAllBtn.isEnabled)
         hp.handleAllBtn.click()
-        hp.deleteBtn.click()
+        hp.delItemBtn.click()
 
-        hp.handleDeletePopup("Accept")
+        hp.handlePopupDeleteItems("Да")
+        hp.waitToBeVisible(rp.messageSuccessOperation,10)
         Assert.assertTrue(rp.messageSuccessOperation.text.
         contains("Артикулите бяха изтрити успешно."))
         hp.menuItems.click()
