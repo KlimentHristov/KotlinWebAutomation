@@ -1,4 +1,4 @@
-package tests.client
+package tests
 
 import org.testng.Assert
 import org.testng.annotations.Test
@@ -11,7 +11,6 @@ import pages.ClientPage
 import pages.HomePage
 import pages.LoginPage
 import pages.ResultPage
-import tests.BaseTest
 import updater.Updater
 
 
@@ -100,11 +99,7 @@ class ClientTests: BaseTest() {
         hp.menuClients.click()
         Assert.assertTrue(driver.findElement(By.xpath("//*[@id=\"emptylist\"]")).text.contains("Все още нямате добавени клиенти."))
     }
-    @Test(priority = 8)
-    fun searchClientByName(){
 
-
-    }
 
 
 

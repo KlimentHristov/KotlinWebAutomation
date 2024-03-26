@@ -132,7 +132,7 @@ class HomePage(driver: WebDriver):BasePage(driver) {
         val wait = WebDriverWait(driver, Duration.ofSeconds(10))
         wait.until(ExpectedConditions.visibilityOf(it.titleForNewItem))
 
-        it.nameOfItem.sendKeys(FakerInfo.randomName())
+        it.nameOfItem.sendKeys(FakerInfo.randomMaterial())
         it.priceOfItem.sendKeys(FakerInfo.randomPrice())
         selectElementByValue(it.dropDownPriceCurrency,"EUR")
         it.quantityOfItem.click()

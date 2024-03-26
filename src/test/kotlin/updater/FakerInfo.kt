@@ -10,6 +10,10 @@ object FakerInfo {
     }
 
 
+    fun randomMaterial(): String{
+        return fake.commerce().material()
+    }
+
     fun randomName():String{
         return fake.name().name()
     }
